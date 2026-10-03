@@ -1,26 +1,200 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Google Sans Flex kirill harflarini qo'llamaydi — ruscha matn Google Sans'dan olinadi. */
+  --font-sans:
+    var(--font-flex), var(--font-cyrillic), ui-sans-serif, system-ui, sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@theme {
+  /* Brend: logodagi binafsha #6d28d9 (hover #7c3aed, active #5b21b6). Sahifadagi
+     barcha ranglar shu rang oilasidan olinadi. */
+  --color-brand-50: #f6f3ff;
+  --color-brand-100: #ece6fe;
+  --color-brand-200: #dacffd;
+  --color-brand-300: #c0aefb;
+  --color-brand-400: #a184f6;
+  --color-brand-500: #7c3aed;
+  --color-brand-600: #6d28d9;
+  --color-brand-700: #5b21b6;
+  --color-brand-800: #47198f;
+  --color-brand-900: #2f1263;
+
+  --color-ink: #150b29;
+  --color-paper: #f8f6fe;
+  --color-line: #e7e1f3;
+  --color-body: #4c4560;
+  --color-muted: #7d7591;
+
+  --color-loss: #dc2f55;
+
+  --text-2xs: 0.6875rem;
+  --text-2xs--line-height: 1.45;
+
+  --shadow-card:
+    0 1px 2px rgb(46 18 99 / 0.04), 0 10px 30px -14px rgb(46 18 99 / 0.16);
+  --shadow-float:
+    0 2px 4px rgb(46 18 99 / 0.06), 0 26px 52px -18px rgb(76 29 149 / 0.34);
+  --shadow-screen:
+    0 0 0 1px rgb(255 255 255 / 0.1), 0 44px 90px -26px rgb(0 0 0 / 0.7);
+
+  --animate-rise: rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
   }
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: white;
+  color: var(--color-ink);
+}
+
+::selection {
+  background: var(--color-brand-200);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-brand-500);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@layer components {
+  /* Sarlavhalar: logodagi yumaloq harflarga mos — biroz keng va yumaloq kesim. */
+  .display {
+    font-stretch: 108%;
+    font-variation-settings: "ROND" 70;
+    font-weight: 650;
+    letter-spacing: -0.025em;
+    line-height: 1.06;
+    text-wrap: balance;
+  }
+
+  .eyebrow {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .num {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+  }
+
+  .container-page {
+    margin-inline: auto;
+    max-width: 80rem;
+    padding-inline: 1.25rem;
+  }
+
+  @media (min-width: 40rem) {
+    .container-page {
+      padding-inline: 2rem;
+    }
+  }
+
+  /* Oq karta: maketdagi kabi yumshoq soya va ingichka hoshiya. */
+  .card {
+    border-radius: 1.5rem;
+    background: white;
+    box-shadow: var(--shadow-card);
+    outline: 1px solid var(--color-line);
+    outline-offset: -1px;
+  }
+
+  /* Ikonka uchun och binafsha kvadrat. */
+  .icon-tile {
+    display: grid;
+    flex-shrink: 0;
+    place-items: center;
+    border-radius: 1rem;
+    background: linear-gradient(
+      145deg,
+      var(--color-brand-100),
+      var(--color-brand-50)
+    );
+    color: var(--color-brand-600);
+  }
+
+  /* Hero foni: to'q binafsha, yuqorida va "pol"da yog'du. */
+  .hero-bg {
+    background-color: var(--color-ink);
+    background-image:
+      radial-gradient(
+        48rem 18rem at 74% 102%,
+        rgb(167 139 250 / 0.55),
+        transparent 70%
+      ),
+      radial-gradient(
+        58rem 32rem at 82% -4%,
+        rgb(124 58 237 / 0.5),
+        transparent 62%
+      ),
+      radial-gradient(
+        42rem 28rem at -8% 88%,
+        rgb(109 40 217 / 0.42),
+        transparent 60%
+      );
+  }
+
+  /* To'q karta (sxema markazi): binafsha yog'duli fon. */
+  .brand-dark {
+    background-color: var(--color-ink);
+    background-image:
+      radial-gradient(
+        26rem 16rem at 80% 0%,
+        rgb(124 58 237 / 0.55),
+        transparent 65%
+      ),
+      radial-gradient(
+        22rem 14rem at 0% 100%,
+        rgb(109 40 217 / 0.45),
+        transparent 60%
+      );
+  }
+
+  /* Och bo'limlar foni: oqdan och binafshaga. */
+  .soft-bg {
+    background-color: var(--color-paper);
+    background-image:
+      radial-gradient(
+        50rem 26rem at 100% 0%,
+        rgb(218 207 253 / 0.5),
+        transparent 65%
+      ),
+      radial-gradient(
+        44rem 24rem at 0% 100%,
+        rgb(236 230 254 / 0.9),
+        transparent 60%
+      );
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

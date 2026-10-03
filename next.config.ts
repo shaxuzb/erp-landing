@@ -1,7 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  async redirects() {
+    return [
+      // Asosiy til — o'zbekcha. Tilsiz manzil shu tilga yo'naltiriladi.
+      { source: "/", destination: "/uz", permanent: false },
+    ];
+  },
 };
 
 export default nextConfig;
